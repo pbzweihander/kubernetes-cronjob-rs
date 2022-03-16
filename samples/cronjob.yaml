@@ -1,0 +1,20 @@
+apiVersion: batch.example.com/v1
+kind: CronJob
+metadata:
+  name: cronjob-sample
+spec:
+  schedule: "0 */1 * * * *"
+  startingDeadlineSeconds: 60
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
